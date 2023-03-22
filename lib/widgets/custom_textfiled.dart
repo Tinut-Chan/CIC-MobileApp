@@ -15,14 +15,14 @@ class CustomTextFieldWidget extends StatefulWidget {
     this.maxLines = 1,
     this.inputFormatters,
     this.keyboardAppearance,
-    required this.keyboardType,
+    this.keyboardType,
     this.obscureText = false,
     this.focusNode,
     this.onSaved,
     this.onTap,
     this.onEditingComplete,
     this.onFieldSubmitted,
-    required this.readOnly,
+    this.readOnly = false,
     this.initialValue,
     this.textDirection,
     this.border,
@@ -30,6 +30,8 @@ class CustomTextFieldWidget extends StatefulWidget {
     this.isRequird,
     this.labelText,
     this.maxLength,
+    this.counterText,
+    this.counter,
   });
 
   final TextEditingController? controller;
@@ -43,7 +45,7 @@ class CustomTextFieldWidget extends StatefulWidget {
   final int? maxLines;
   final List<TextInputFormatter>? inputFormatters;
   final Brightness? keyboardAppearance;
-  final TextInputType keyboardType;
+  final TextInputType? keyboardType;
   final bool obscureText;
   final FocusNode? focusNode;
   final FormFieldSetter<String>? onSaved;
@@ -58,6 +60,8 @@ class CustomTextFieldWidget extends StatefulWidget {
   final bool? isRequird;
   final String? labelText;
   final int? maxLength;
+  final String? counterText;
+  final bool? counter;
 
   @override
   State<CustomTextFieldWidget> createState() => _CustomTextFieldWidgetState();
@@ -65,6 +69,7 @@ class CustomTextFieldWidget extends StatefulWidget {
 
 class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
   final _locatTextEditingController = TextEditingController();
+  int currentIndex = 0;
 
   void _initialTextField() {
     (widget.controller ?? _locatTextEditingController).text =
@@ -84,6 +89,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
       maxLength: widget.maxLength,
       onChanged: (value) {
         widget.onChanged?.call(value);
+        currentIndex = value.length;
         setState(() {});
       },
       autocorrect: widget.autoCorrect,
@@ -109,24 +115,27 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
       textDirection: widget.textDirection,
       decoration: InputDecoration(
         border: widget.border,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12.0),
+        contentPadding: const EdgeInsets.all(12.0),
         filled: true,
         alignLabelWithHint: true,
         errorBorder: errorOutlineBorder,
+        counterText:
+            widget.counter == null || widget.counter == false ? '' : null,
+        // counter: const Text("current "),
         fillColor:
             (widget.controller ?? _locatTextEditingController).text.isNotEmpty
                 ? widget.readOnly == true
                     ? Colors.green
-                    : Colors.grey
-                : Colors.orange,
+                    : Colors.purple
+                : Colors.white,
         enabledBorder: widget.isValidate!
             ? errorOutlineBorder
             : (widget.controller ?? _locatTextEditingController).text.isEmpty
                 ? OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.blue,
-                      width: widget.readOnly == true ? 0.5 : 1,
+                      // width: widget.readOnly == true ? 0.5 : 1,
                     ),
                   )
                 : OutlineInputBorder(
@@ -139,7 +148,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
                 ? OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                     borderSide: BorderSide(
-                      color: Colors.yellow,
+                      color: const Color(0xff828282),
                       width: widget.readOnly == true ? 0.5 : 1,
                     ),
                   )
@@ -151,6 +160,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
             ? null
             : Container(
                 padding: EdgeInsets.zero,
+                width: widget.labelText!.length < widget.maxLength! ? 120 : 200,
                 child: Row(
                   children: [
                     widget.isRequird != null && widget.isRequird!

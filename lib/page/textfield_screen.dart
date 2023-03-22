@@ -20,139 +20,146 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 50,
-                ),
-                CustomTextFieldWidget(
-                  initialValue: appController.usernameField.value.text,
-                  isRequird: true,
-                  maxLength: 10,
-                  labelText: 'User name ',
-                  readOnly: false,
-                  onChanged: (value) {
-                    appController.usernameField.value.text = value;
-                    debugPrint(
-                        '=== UserName: ${appController.usernameField.value.text}');
-                  },
-                  validator: (value) {
-                    if (value != null && value.length < 100) {
-                      return 'String must be at least 8 charactor';
-                    } else {
-                      return null;
-                    }
-                  },
-                  keyboardType: TextInputType.phone,
-                ),
-                CustomTextFieldWidget(
-                  initialValue: appController.nameField.value.text,
-                  isRequird: false,
-                  maxLength: 10,
-                  labelText: 'name',
-                  readOnly: false,
-                  onChanged: (value) {
-                    appController.nameField.value.text = value;
-                    debugPrint(
-                        '=== Name: ${appController.nameField.value.text}');
-                  },
-                  validator: (value) {
-                    if (value != null && value.length < 100) {
-                      return 'String must be at least 8 charactor';
-                    } else {
-                      return null;
-                    }
-                  },
-                  keyboardType: TextInputType.phone,
-                ),
-                CustomTextFieldWidget(
-                  initialValue: appController.ageField.value.text,
-                  readOnly: false,
-                  labelText: 'Age',
-                  onChanged: (value) {
-                    appController.ageField.value.text = value;
-                    debugPrint('=== Age: ${appController.ageField.value.text}');
-                  },
-                  validator: (value) {
-                    if (value != null && value.length < 100) {
-                      return 'String must be at least 8 charactor';
-                    } else {
-                      return null;
-                    }
-                  },
-                  maxLength: 10,
-                  keyboardType: TextInputType.phone,
-                ),
-                CustomTextFieldWidget(
-                  initialValue: appController.phoneNumberField.value.text,
-                  enable: true,
-                  readOnly: true,
-                  onChanged: (value) {
-                    appController.phoneNumberField.value.text = value;
-                    debugPrint(
-                        '=== PhoneNuber: ${appController.phoneNumberField.value.text}');
-                  },
-                  validator: (value) {
-                    if (value != null && value.length < 100) {
-                      return 'String must be at least 8 charactor';
-                    } else {
-                      return null;
-                    }
-                  },
-                  maxLength: 10,
-                  keyboardType: TextInputType.phone,
-                ),
-                CustomTextFieldWidget(
-                  initialValue: appController.addressField.value.text,
-                  enable: true,
-                  readOnly: true,
-                  onChanged: (value) {
-                    appController.ageField.value.text = value;
-                    debugPrint(
-                        '=== ValueController: ${appController.addressField.value.text}');
-                  },
-                  validator: (value) {
-                    if (value != null && value.length < 100) {
-                      return 'String must be at least 8 charactor';
-                    } else {
-                      return null;
-                    }
-                  },
-                  maxLength: 10,
-                  keyboardType: TextInputType.phone,
-                ),
-                CustomTextFieldWidget(
-                  initialValue: appController.addressField.value.text,
-                  readOnly: false,
-                  onChanged: (value) {
-                    appController.ageField.value.text = value;
-                    debugPrint(
-                        '=== ValueController: ${appController.addressField.value.text}');
-                  },
-                  validator: (value) {
-                    if (value != null && value.length < 100) {
-                      return 'String must be at least 8 charactor';
-                    } else {
-                      return null;
-                    }
-                  },
-                  maxLength: 500,
-                  minLines: 10,
-                  keyboardType: TextInputType.text,
-                  maxLines: 10,
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  child: CupertinoButton(
-                    color: Colors.blue,
-                    onPressed: () {},
-                    child: const Text('Submit'),
+        body: Obx(
+          () => SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  CustomTextFieldWidget(
+                    initialValue: appController.usernameField.value.text,
+                    isRequird: true,
+                    maxLength: 10,
+                    labelText: 'User name Player',
+                    readOnly: false,
+                    onChanged: (value) {
+                      appController.usernameField.value.text = value;
+                      debugPrint(
+                          '=== UserName: ${appController.usernameField.value.text}');
+                    },
+                    validator: (value) {
+                      if (value != null && value.length < 100) {
+                        return 'String must be at least 8 charactor';
+                      } else {
+                        return null;
+                      }
+                    },
+                    keyboardType: TextInputType.phone,
                   ),
-                )
-              ],
+                  const SizedBox(height: 15.0),
+                  CustomTextFieldWidget(
+                    initialValue: appController.nameField.value.text,
+                    isRequird: false,
+                    maxLength: 10,
+                    labelText: 'name',
+                    readOnly: false,
+                    onChanged: (value) {
+                      appController.nameField.value.text = value;
+                      debugPrint(
+                          '=== Name: ${appController.nameField.value.text}');
+                    },
+                    validator: (value) {
+                      if (value != null && value.length < 100) {
+                        return 'String must be at least 8 charactor';
+                      } else {
+                        return null;
+                      }
+                    },
+                    keyboardType: TextInputType.phone,
+                  ),
+                  const SizedBox(height: 15.0),
+                  CustomTextFieldWidget(
+                    initialValue: appController.ageField.value.text,
+                    readOnly: false,
+                    labelText: 'Age',
+                    onChanged: (value) {
+                      appController.ageField.value.text = value;
+                      debugPrint(
+                          '=== Age: ${appController.ageField.value.text}');
+                    },
+                    validator: (value) {
+                      if (value != null && value.length < 100) {
+                        return 'String must be at least 8 charactor';
+                      } else {
+                        return null;
+                      }
+                    },
+                    maxLength: 10,
+                    keyboardType: TextInputType.phone,
+                  ),
+                  const SizedBox(height: 15.0),
+                  CustomTextFieldWidget(
+                    initialValue: appController.phoneNumberField.value.text,
+                    readOnly: true,
+                    onChanged: (value) {
+                      appController.phoneNumberField.value.text = value;
+                      debugPrint(
+                          '=== PhoneNuber: ${appController.phoneNumberField.value.text}');
+                    },
+                    validator: (value) {
+                      if (value != null && value.length < 100) {
+                        return 'String must be at least 8 charactor';
+                      } else {
+                        return null;
+                      }
+                    },
+                    maxLength: 10,
+                    keyboardType: TextInputType.phone,
+                  ),
+                  const SizedBox(height: 15.0),
+                  CustomTextFieldWidget(
+                    initialValue: appController.addressField.value.text,
+                    readOnly: true,
+                    onChanged: (value) {
+                      appController.ageField.value.text = value;
+                      debugPrint(
+                          '=== ValueController: ${appController.addressField.value.text}');
+                    },
+                    validator: (value) {
+                      if (value != null && value.length < 100) {
+                        return 'String must be at least 8 charactor';
+                      } else {
+                        return null;
+                      }
+                    },
+                    maxLength: 10,
+                    keyboardType: TextInputType.phone,
+                  ),
+                  const SizedBox(height: 15.0),
+                  CustomTextFieldWidget(
+                    initialValue: appController.aboutField.value.text,
+                    readOnly: false,
+                    labelText: 'Enter About',
+                    onChanged: (value) {
+                      appController.aboutField.value.text = value;
+                      debugPrint(
+                          '=== ValueController: ${appController.aboutField.value.text}');
+                    },
+                    validator: (value) {
+                      if (value != null && value.length < 100) {
+                        return 'String must be at least 8 charactor';
+                      } else {
+                        return null;
+                      }
+                    },
+                    maxLength: 500,
+                    minLines: 10,
+                    keyboardType: TextInputType.text,
+                    maxLines: 10,
+                    counter: true,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: CupertinoButton(
+                      color: Colors.blue,
+                      onPressed: () {
+                        appController.onTest();
+                      },
+                      child: const Text('Submit'),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
