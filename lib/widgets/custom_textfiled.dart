@@ -116,16 +116,16 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
         fillColor:
             (widget.controller ?? _locatTextEditingController).text.isNotEmpty
                 ? widget.readOnly == true
-                    ? Colors.grey.withOpacity(0.7)
-                    : Colors.grey.withOpacity(0.9)
-                : Colors.grey.withOpacity(0.3),
+                    ? Colors.green
+                    : Colors.grey
+                : Colors.orange,
         enabledBorder: widget.isValidate!
             ? errorOutlineBorder
             : (widget.controller ?? _locatTextEditingController).text.isEmpty
                 ? OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                     borderSide: BorderSide(
-                      color: Colors.black.withOpacity(0.7),
+                      color: Colors.blue,
                       width: widget.readOnly == true ? 0.5 : 1,
                     ),
                   )
@@ -139,7 +139,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
                 ? OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                     borderSide: BorderSide(
-                      color: Colors.black.withOpacity(0.7),
+                      color: Colors.yellow,
                       width: widget.readOnly == true ? 0.5 : 1,
                     ),
                   )
