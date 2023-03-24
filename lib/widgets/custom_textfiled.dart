@@ -1,67 +1,47 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class CustomTextFieldWidget extends StatefulWidget {
   const CustomTextFieldWidget({
     super.key,
     this.controller,
-    this.autoCorrect = false,
-    this.buildCounter,
     this.onChanged,
     this.validator,
-    this.enableSuggestions = false,
-    this.enable = true,
     this.minLines = 1,
     this.maxLines = 1,
-    this.inputFormatters,
-    this.keyboardAppearance,
-    this.keyboardType,
     this.obscureText = false,
     this.focusNode,
     this.onSaved,
     this.onTap,
-    this.onEditingComplete,
-    this.onFieldSubmitted,
     this.readOnly = false,
     this.initialValue,
-    this.textDirection,
     this.border,
     this.isValidate = false,
     this.isRequird,
     this.labelText,
     this.maxLength,
     this.counterText,
-    this.counter,
+    this.errorText,
   });
 
   final TextEditingController? controller;
-  final bool autoCorrect;
-  final InputCounterWidgetBuilder? buildCounter;
   final ValueChanged<String>? onChanged;
   final FormFieldValidator<String>? validator;
-  final bool enableSuggestions;
-  final bool enable;
   final int? minLines;
   final int? maxLines;
-  final List<TextInputFormatter>? inputFormatters;
-  final Brightness? keyboardAppearance;
-  final TextInputType? keyboardType;
   final bool obscureText;
   final FocusNode? focusNode;
   final FormFieldSetter<String>? onSaved;
   final GestureTapCallback? onTap;
-  final VoidCallback? onEditingComplete;
-  final ValueChanged<String>? onFieldSubmitted;
   final bool readOnly;
   final String? initialValue;
-  final TextDirection? textDirection;
   final InputBorder? border;
   final bool? isValidate;
   final bool? isRequird;
   final String? labelText;
   final int? maxLength;
-  final String? counterText;
-  final bool? counter;
+  final bool? counterText;
+  final String? errorText;
 
   @override
   State<CustomTextFieldWidget> createState() => _CustomTextFieldWidgetState();
@@ -69,7 +49,6 @@ class CustomTextFieldWidget extends StatefulWidget {
 
 class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
   final _locatTextEditingController = TextEditingController();
-  int currentIndex = 0;
 
   void _initialTextField() {
     (widget.controller ?? _locatTextEditingController).text =
@@ -84,140 +63,164 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: widget.controller,
-      maxLength: widget.maxLength,
-      onChanged: (value) {
-        widget.onChanged?.call(value);
-        currentIndex = value.length;
-        setState(() {});
-      },
-      autocorrect: widget.autoCorrect,
-      buildCounter: widget.buildCounter, // Count remaining index in textfield
-      validator: widget.validator,
-      enableSuggestions: widget.enableSuggestions,
-      enabled: widget.enable,
-      minLines: widget.minLines,
-      maxLines: widget.maxLines,
-      inputFormatters: widget.inputFormatters,
-      keyboardAppearance: widget.keyboardAppearance,
-      keyboardType: widget.keyboardType,
-      obscureText: widget.obscureText,
-      focusNode:
-          widget.focusNode, // When click done auto go throw to next textfield
-      onSaved: widget.onSaved,
-      onTap: widget.onTap,
-      onEditingComplete: widget
-          .onEditingComplete, // After click done, go ... on keyboard, it sumit to controller
-      onFieldSubmitted: widget.onFieldSubmitted,
-      readOnly: widget.readOnly,
-      initialValue: widget.initialValue,
-      textDirection: widget.textDirection,
-      decoration: InputDecoration(
-        border: widget.border,
-        contentPadding: const EdgeInsets.all(12.0),
-        filled: true,
-        alignLabelWithHint: true,
-        errorBorder: errorOutlineBorder,
-        counterText:
-            widget.counter == null || widget.counter == false ? '' : null,
-        // counter: const Text("current "),
-        fillColor:
-            (widget.controller ?? _locatTextEditingController).text.isNotEmpty
+    return Column(
+      children: [
+        TextFormField(
+          controller: widget.controller,
+          maxLength: widget.maxLength,
+          onChanged: (value) {
+            widget.onChanged?.call(value);
+            setState(() {});
+          },
+          validator: widget.validator,
+          minLines: widget.minLines,
+          maxLines: widget.maxLines,
+          obscureText: widget.obscureText,
+          focusNode: widget
+              .focusNode, // When click done auto go throw to next textfield
+          onSaved: widget.onSaved,
+          onTap: widget.onTap,
+          readOnly: widget.readOnly,
+          initialValue: widget.initialValue,
+          decoration: InputDecoration(
+            border: widget.border,
+            contentPadding: const EdgeInsets.all(12.0),
+            filled: true,
+            alignLabelWithHint: true,
+            counterText:
+                widget.counterText == null || widget.counterText == false
+                    ? ''
+                    : null,
+            errorBorder: blackOutlineBorder,
+            fillColor: (widget.controller ?? _locatTextEditingController)
+                    .text
+                    .isNotEmpty
                 ? widget.readOnly == true
-                    ? Colors.green
-                    : Colors.purple
+                    ? const Color(0xffF2F2F2).withOpacity(0.5)
+                    : const Color(0xffF2F2F2)
                 : Colors.white,
-        enabledBorder: widget.isValidate!
-            ? errorOutlineBorder
-            : (widget.controller ?? _locatTextEditingController).text.isEmpty
+            enabledBorder: widget.isValidate!
                 ? OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: const BorderSide(
-                      color: Colors.blue,
-                      // width: widget.readOnly == true ? 0.5 : 1,
-                    ),
-                  )
-                : OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide.none,
-                  ),
-        focusedBorder: widget.isValidate!
-            ? errorOutlineBorder
-            : (widget.controller ?? _locatTextEditingController).text.isEmpty
-                ? OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(
-                      color: const Color(0xff828282),
+                        width: widget.readOnly == true ? 0.5 : 1,
+                        color: const Color(0xff858C94)),
+                  )
+                : widget.readOnly ||
+                        (widget.controller ?? _locatTextEditingController)
+                            .text
+                            .isNotEmpty
+                    ? OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none,
+                      )
+                    : OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+            focusedBorder: widget.isValidate!
+                ? OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
                       width: widget.readOnly == true ? 0.5 : 1,
+                      color: const Color(0xff004AD7),
                     ),
                   )
-                : OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide.none,
+                : (widget.controller ?? _locatTextEditingController)
+                        .text
+                        .isEmpty
+                    ? trueOutLineBorder
+                    : OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          width: widget.readOnly == true ? 0.5 : 1,
+                          color: Colors.black.withOpacity(0.7),
+                        ),
+                      ),
+            focusedErrorBorder: blackOutlineBorder,
+            label: widget.labelText == null
+                ? null
+                : Container(
+                    padding: EdgeInsets.zero,
+                    child: Row(
+                      children: [
+                        widget.isRequird != null && widget.isRequird!
+                            ? Text(
+                                '*',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displayLarge!
+                                    .copyWith(
+                                      fontSize: 16,
+                                      color: Colors.red,
+                                    ),
+                              )
+                            : const SizedBox(),
+                        const SizedBox(width: 5.0),
+                        Text(widget.labelText ?? ''),
+                      ],
+                    ),
                   ),
-        label: widget.labelText == null
-            ? null
-            : Container(
-                padding: EdgeInsets.zero,
-                width: widget.labelText!.length < widget.maxLength! ? 120 : 200,
-                child: Row(
-                  children: [
-                    widget.isRequird != null && widget.isRequird!
-                        ? Text(
-                            '*',
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayLarge!
-                                .copyWith(
-                                  fontSize: 16,
-                                  color: Colors.red,
-                                ),
-                          )
-                        : const SizedBox(),
-                    const SizedBox(width: 5.0),
-                    Text(widget.labelText ?? ''),
-                  ],
+            labelStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16,
+                  color: const Color(0xff828282),
                 ),
-              ),
-        labelStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
-              fontWeight: FontWeight.w700,
-              fontSize: 16,
-              color: const Color(0xff828282),
-            ),
-        hintStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
-              fontWeight: FontWeight.w700,
-              color: const Color(0xff828282),
-            ),
-      ),
+            hintStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: const Color(0xff828282),
+                ),
+            errorStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: Colors.red,
+                ),
+          ),
+        ),
+        const SizedBox(height: 8.0),
+        Visibility(
+          visible: widget.isValidate ?? false,
+          child: Row(
+            children: [
+              const Icon(CupertinoIcons.exclamationmark_circle),
+              Text(
+                widget.errorText ?? '',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall!
+                    .copyWith(color: Colors.red.shade500),
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 
   OutlineInputBorder readOnlyOutlineBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(10.0),
-    borderSide: BorderSide(
-      color: Colors.black.withOpacity(0.7),
+    borderSide: const BorderSide(
+      color: Color(0xffF2F2F2),
       width: 1,
     ),
   );
   OutlineInputBorder errorOutlineBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(10.0),
-    borderSide: BorderSide(
-      color: Colors.red.withOpacity(0.7),
+    borderSide: const BorderSide(
+      color: Color(0xffEB5757),
       width: 1,
     ),
   );
-  OutlineInputBorder smallOutlineBorder = OutlineInputBorder(
+  OutlineInputBorder trueOutLineBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(10.0),
     borderSide: BorderSide(
-      color: Colors.green.withOpacity(0.7),
+      color: const Color(0xff858C94).withOpacity(0.7),
       width: 1,
     ),
   );
-  OutlineInputBorder normalOutlineBorder = OutlineInputBorder(
+  OutlineInputBorder blackOutlineBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(10.0),
     borderSide: BorderSide(
-      color: Colors.blue.withOpacity(0.7),
+      color: Colors.black.withOpacity(0.7),
       width: 1,
     ),
   );

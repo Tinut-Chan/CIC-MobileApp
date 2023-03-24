@@ -44,7 +44,6 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                         return null;
                       }
                     },
-                    keyboardType: TextInputType.phone,
                   ),
                   const SizedBox(height: 15.0),
                   CustomTextFieldWidget(
@@ -65,7 +64,6 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                         return null;
                       }
                     },
-                    keyboardType: TextInputType.phone,
                   ),
                   const SizedBox(height: 15.0),
                   CustomTextFieldWidget(
@@ -85,7 +83,6 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                       }
                     },
                     maxLength: 10,
-                    keyboardType: TextInputType.phone,
                   ),
                   const SizedBox(height: 15.0),
                   CustomTextFieldWidget(
@@ -104,7 +101,6 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                       }
                     },
                     maxLength: 10,
-                    keyboardType: TextInputType.phone,
                   ),
                   const SizedBox(height: 15.0),
                   CustomTextFieldWidget(
@@ -123,7 +119,6 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                       }
                     },
                     maxLength: 10,
-                    keyboardType: TextInputType.phone,
                   ),
                   const SizedBox(height: 15.0),
                   CustomTextFieldWidget(
@@ -144,9 +139,8 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                     },
                     maxLength: 500,
                     minLines: 10,
-                    keyboardType: TextInputType.text,
                     maxLines: 10,
-                    counter: true,
+                    counterText: true,
                   ),
                   SizedBox(
                     width: double.infinity,
